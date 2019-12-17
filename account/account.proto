@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package moneytree.svc.account;
+option go_package = "account";
+
+import "customer.proto";
+
+service AccountService {
+    rpc Create(customer.Customer) returns (Response) {}
+    rpc Get(customer.Customer) returns (Account) {}
+}
+
+message Account {
+  string id = 1;
+  string name = 2;
+}
+
+message Response {
+  customer.Customer customer = 1;
+  bool created = 2;
+}
