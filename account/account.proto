@@ -16,6 +16,6 @@ message Account {
 }
 
 message Response {
-  customer.Customer customer = 1;
-  bool created = 2;
+  Account account = 1;
+  repeated Account accounts = 2;
 }
