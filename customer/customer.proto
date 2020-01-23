@@ -19,6 +19,7 @@ message Customer {
     repeated Address addresses = 4;
     repeated string phone_numbers = 5;
     string email_address = 6;
+    string account_number = 7;
 }
 
 //TODO these can be imported
