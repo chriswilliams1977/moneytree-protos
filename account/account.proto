@@ -14,7 +14,6 @@ message Account {
   string id = 1;
   string number = 2;
   string type = 3;
-  customer.Customer customer = 4;
 }
 
 message Response {
