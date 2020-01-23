@@ -6,8 +6,8 @@ option go_package = "account";
 import "customer.proto";
 
 service AccountService {
-    rpc CreateAccount(customer.Customer) returns (Response) {}
-    rpc GetAccounts(customer.Customer) returns (Account) {}
+    rpc CreateAccount(Account) returns (Response) {}
+    rpc GetAccounts(customer.Customer) returns (Response) {}
 }
 
 message Account {
