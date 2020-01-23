@@ -7,7 +7,7 @@ import "customer.proto";
 
 service AccountService {
     rpc CreateAccount(Account) returns (Response) {}
-    rpc GetAccounts(customer.Customer) returns (Response) {}
+    rpc GetAccounts(Customer) returns (Response) {}
 }
 
 message Account {
