@@ -16,6 +16,10 @@ message Account {
   string type = 3;
 }
 
+message Customer {
+  customer.Customer customer = 1;
+}
+
 message Response {
   Account account = 1;
   repeated Account accounts = 2;
