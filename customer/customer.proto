@@ -10,7 +10,6 @@ service CustomerService {
     rpc CreateCustomer(Customer) returns (Response) {}
     // Created a new method
     rpc GetCustomers(GetRequest) returns (Response) {}
-    rpc GetCustomerAccounts(GetRequest) returns (Response) {}
 }
   
 message Customer {
@@ -48,5 +47,4 @@ message Response {
     // Added a pluralised consignment to our generic response message
     // array of these types
     repeated Customer customers = 3;
-    Account account = 4;
 }
