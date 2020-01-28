@@ -38,11 +38,15 @@ message Address {
 // Created a blank get request
 message GetRequest {}
 
+message Account {
+    account.Account account = 1;
+}
+
 message Response {
     bool created = 1;
     Customer customer = 2;
     // Added a pluralised consignment to our generic response message
     // array of these types
     repeated Customer customers = 3;
-    account.Account account = 4;
+    Account account = 4;
 }
