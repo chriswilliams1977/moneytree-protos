@@ -9,7 +9,8 @@ import "account.proto";
 service CustomerService {
     rpc CreateCustomer(Customer) returns (Response) {}
     // Created a new method
-    rpc GetCustomers(GetRequest) returns (Response) {}
+    rpc GetCustomers(Request) returns (Response) {}
+    rpc GetCustomerById(Request) returns (Response) {}
 }
   
 message Customer {
@@ -35,7 +36,9 @@ message Address {
 }
 
 // Created a blank get request
-message GetRequest {}
+message Request {
+    string account_number = 1;
+}
 
 message Account {
     account.Account account = 1;
