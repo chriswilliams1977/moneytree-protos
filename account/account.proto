@@ -6,6 +6,7 @@ option go_package = "account";
 service AccountService {
     rpc CreateAccount(Account) returns (Response) {}
     rpc GetAccounts(Request) returns (Response) {}
+    rpc GetAccountByNumber(Request) returns (Response){}
 }
 
 message Account {
