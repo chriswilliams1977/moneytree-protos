@@ -11,6 +11,7 @@ service CustomerService {
     // Created a new method
     rpc GetCustomers(Request) returns (Response) {}
     rpc GetCustomerById(Request) returns (Response) {}
+    rpc GetCustomerAccounts(Request) returns (Account){}
 }
   
 message Customer {
