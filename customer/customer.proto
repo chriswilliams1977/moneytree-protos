@@ -1,8 +1,8 @@
 // moneytree/customer-service/proto/customer/customer.proto
 syntax = "proto3";
 
-package moneytree.svc.proto;
-option go_package = "customer";
+package moneytree.svc.customer;
+option go_package = "moneytree.svc.proto";
 
 import "account.proto";
 
@@ -11,7 +11,7 @@ service CustomerService {
     // Created a new method
     rpc GetCustomers(CustomerRequest) returns (CustomerResponse) {}
     rpc GetCustomerById(CustomerRequest) returns (CustomerResponse) {}
-    rpc GetCustomerAccounts(CustomerRequest) returns (moneytree.svc.proto.Account){}
+    rpc GetCustomerAccounts(CustomerRequest) returns (account.Account){}
 }
   
 message Customer {
