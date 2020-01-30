@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 package moneytree.svc.customer;
-option go_package = "customer";
+option go_package = "github.com/chriswilliams1977/moneytree-protos/customer";
 
 import "account.proto";
 
