@@ -2,16 +2,16 @@
 syntax = "proto3";
 
 package moneytree.svc.customer;
-option go_package = "proto";
+option go_package = "customer";
 
 import "account.proto";
 
 service CustomerService {
-    rpc CreateCustomer(Customer) returns (CustomerResponse) {}
+    rpc CreateCustomer(Customer) returns (Response) {}
     // Created a new method
-    rpc GetCustomers(CustomerRequest) returns (CustomerResponse) {}
-    rpc GetCustomerById(CustomerRequest) returns (CustomerResponse) {}
-    rpc GetCustomerAccounts(CustomerRequest) returns (moneytree.svc.account.Account){}
+    rpc GetCustomers(Request) returns (Response) {}
+    rpc GetCustomerById(Request) returns (Response) {}
+    rpc GetCustomerAccounts(Request) returns (account.Account){}
 }
   
 message Customer {
@@ -37,11 +37,11 @@ message Address {
 }
 
 // Created a blank get request
-message CustomerRequest {
+message Request {
     string account_number = 1;
 }
 
-message CustomerResponse {
+message Response {
     bool created = 1;
     Customer customer = 2;
     // Added a pluralised consignment to our generic response message
