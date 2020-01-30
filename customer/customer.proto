@@ -11,7 +11,7 @@ service CustomerService {
     // Created a new method
     rpc GetCustomers(Request) returns (Response) {}
     rpc GetCustomerById(Request) returns (Response) {}
-    rpc GetCustomerAccounts(Request) returns (account.Account){}
+    rpc GetCustomerAccounts(Request) returns (Response){}
 }
   
 message Customer {
@@ -47,4 +47,5 @@ message Response {
     // Added a pluralised consignment to our generic response message
     // array of these types
     repeated Customer customers = 3;
+    account.Account Account = 4;
 }
