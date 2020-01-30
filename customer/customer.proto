@@ -11,7 +11,7 @@ service CustomerService {
     // Created a new method
     rpc GetCustomers(Request) returns (Response) {}
     rpc GetCustomerById(Request) returns (Response) {}
-    rpc GetCustomerAccounts(Request) returns (Account){}
+    rpc GetCustomerAccounts(Request) returns (account.Account){}
 }
   
 message Customer {
@@ -39,10 +39,6 @@ message Address {
 // Created a blank get request
 message Request {
     string account_number = 1;
-}
-
-message Account {
-    account.Account account = 1;
 }
 
 message Response {
