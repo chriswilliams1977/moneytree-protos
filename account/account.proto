@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package moneytree.svc.account;
+package moneytree.svc.proto;
 option go_package = "account";
 
 service AccountService {
-    rpc CreateAccount(Account) returns (Response) {}
-    rpc GetAccounts(Request) returns (Response) {}
-    rpc GetAccountByNumber(Request) returns (Response){}
+    rpc CreateAccount(Account) returns (AccountResponse) {}
+    rpc GetAccounts(AccountRequest) returns (AccountResponse) {}
+    rpc GetAccountByNumber(AccountRequest) returns (AccountResponse){}
 }
 
 message Account {
@@ -16,11 +16,11 @@ message Account {
   int32 balance = 4;
 }
 
-message Request {
+message AccountRequest {
   string account_number = 1;
 }
 
-message Response {
+message AccountResponse {
   Account account = 1;
   repeated Account accounts = 2;
 }
