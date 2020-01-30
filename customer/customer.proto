@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 package moneytree.svc.customer;
-option go_package = "moneytree.svc.proto";
+option go_package = "proto";
 
 import "account.proto";
 
@@ -11,7 +11,7 @@ service CustomerService {
     // Created a new method
     rpc GetCustomers(CustomerRequest) returns (CustomerResponse) {}
     rpc GetCustomerById(CustomerRequest) returns (CustomerResponse) {}
-    rpc GetCustomerAccounts(CustomerRequest) returns (account.Account){}
+    rpc GetCustomerAccounts(CustomerRequest) returns (moneytree.svc.account.Account){}
 }
   
 message Customer {
