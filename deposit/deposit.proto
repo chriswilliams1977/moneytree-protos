@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package moneytree.svc.deposit;
+option go_package = "github.com/chriswilliams1977/moneytree-protos/deposit";
+
+import "google/protobuf/timestamp.proto";
+
+service DepositService {
+    rpc CreateDeposit(Deposit) returns (Response) {}
+    rpc GetDeposits(Request) returns (Response) {}
+}
+
+message Deposit {
+    string id = 1;
+    int32 amount = 2;
+    google.protobuf.Timestamp date = 3;
+    int32 transaction_id = 4;
+}
+
+message Request {
+    string account_number = 1;
+}
+
+message Response {
+    bool created = 1;
+    Deposit deposit = 2;
+    repeated Deposit deposits = 3;
+}

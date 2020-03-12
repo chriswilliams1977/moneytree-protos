@@ -6,9 +6,18 @@
 #version is appended to go mod when downloaded
 build:
 	protoc \
-		--proto_path=./customer --go_out=plugins=micro,paths=source_relative:./customer -I./customer -I./account \
+		--proto_path=./customer --go_out=plugins=micro,paths=source_relative:./customer -I./customer -I./account -I./deposit -I./withdrawal \
 		customer/customer.proto
 
 	protoc \
-		--proto_path=./account --go_out=plugins=micro,paths=source_relative:./account \
+		--proto_path=./account --go_out=plugins=micro,paths=source_relative:./account -I./deposit -I./withdrawal \
 		account/account.proto
+
+	protoc \
+		--proto_path=./deposit --go_out=plugins=micro,paths=source_relative:./deposit \
+		deposit/deposit.proto
+
+	protoc \
+		--proto_path=./withdrawal --go_out=plugins=micro,paths=source_relative:./withdrawal \
+		withdrawal/withdrawal.proto
+
