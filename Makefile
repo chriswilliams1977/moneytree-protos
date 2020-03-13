@@ -5,7 +5,7 @@
 #UPDATING IMPORTS
 #Create new tag: git tag v1.0.1
 #Push tags git push --tags
-#Download latest packages: go get github.com/chriswilliams1977/moneytree-protos
+#Download latest packages: go get github.com/chriswilliams1977/moneytree-protos@v1.0.22
 #version is appended to go mod when downloaded
 build:
 	protoc \

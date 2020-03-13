@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 service WithdrawalService {
     rpc CreateWithdrawal(Withdrawal) returns (Response) {}
-    rpc GetWithdrawal(Request) returns (Response) {}
+    rpc GetWithdrawals(Request) returns (Response) {}
 }
 
 message Withdrawal {
