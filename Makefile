@@ -2,7 +2,10 @@
 #make sure you use full path in option go_package to generate right imports in pb files
 #use source_relative to use option go_package but generate files where you want them
 #by default protoc will create dir structure based on go_package path if source relative not used
-#use git tag v1.0.1 to version commits
+#UPDATING IMPORTS
+#Create new tag: git tag v1.0.1
+#Push tags git push --tags
+#Download latest packages: go get github.com/chriswilliams1977/moneytree-protos
 #version is appended to go mod when downloaded
 build:
 	protoc \
