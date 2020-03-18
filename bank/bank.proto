@@ -6,7 +6,7 @@ option go_package = "github.com/chriswilliams1977/moneytree-protos/bank";
 import "address.proto";
 
 service BankService {
-    rpc GetCustomerBank(Request) returns (Response) {}
+    rpc GetBank(Request) returns (Response) {}
 }
 
 message Bank {
