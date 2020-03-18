@@ -1,0 +1,15 @@
+// moneytree/customer-service/proto/customer/customer.proto
+syntax = "proto3";
+
+package moneytree.svc.address;
+option go_package = "github.com/chriswilliams1977/moneytree-protos/address";
+
+
+//Address type
+message Address {
+    string address_line_1 = 1;
+    string address_line_2 = 2;
+    string zip_code = 3;
+    string city = 4;
+    string country = 5;
+}

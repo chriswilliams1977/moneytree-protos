@@ -3,29 +3,50 @@ syntax = "proto3";
 package moneytree.svc.account;
 option go_package = "github.com/chriswilliams1977/moneytree-protos/account";
 
-import "deposit.proto";
-import "withdrawal.proto";
+import "transaction.proto";
 
 service AccountService {
     rpc CreateAccount(Account) returns (Response) {}
     rpc GetAccounts(Request) returns (Response) {}
     rpc GetAccountByNumber(Request) returns (Response) {}
-    rpc updateAccountDeposit(deposit.Deposit) returns (Response) {}
-    rpc updateAccountWithdrawal(withdrawal.Withdrawal) returns(Response) {}
+    rpc UpdateBalance(Request) returns (Response) {}
+    rpc GetTransactions(Request) returns(Response) {}
 }
 
 message Account {
   string number = 1;
-  string type = 2;
+  enum AccountType {
+      UNKNOWN_ACCOUNT_TYPE = 0;
+      CurrentAccount = 1;
+      SavingAccount = 2;
+      MortgageAccount = 3;
+  }
+  AccountType type = 2;
   string status = 3;
-  int32 balance = 4;
+  double balance = 4;
+  int64 uuid = 5;
+}
+
+message CurrentAccount {
+    double interest_rate = 1;
+    int32 monthly_charge = 2;
+}
+
+message SavingsAccount {
+    double interest_rate = 1;
+}
+
+message MortgageAccount {
+    double interest_rate = 1;
 }
 
 message Request {
   string account_number = 1;
+  transaction.Transaction transaction = 2;
 }
 
 message Response {
   Account account = 1;
   repeated Account accounts = 2;
+  repeated transaction.Transaction transactions= 3;
 }

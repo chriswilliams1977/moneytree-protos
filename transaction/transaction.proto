@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package moneytree.svc.transaction;
+option go_package = "github.com/chriswilliams1977/moneytree-protos/transaction";
+
+import "google/protobuf/timestamp.proto";
+
+service TransactionService {
+    rpc CreateTransaction(Transaction) returns (Response) {}
+    rpc GetTransactions(Request) returns (Response) {}
+}
+
+message Transaction {
+    string id = 1;
+    enum TransactionType {
+        UNKNOWN_TRANSACTION_TYPE = 0;
+        Withdrawal = 1;
+        Deposit = 2;
+        Transfer = 3;
+    }
+    TransactionType type = 2;
+    google.protobuf.Timestamp date = 3;
+    string uuid =4;
+}
+
+message Withdrawal {
+    double amount = 1;
+    string description = 2;
+    string reference = 3;
+}
+
+message Deposit {
+    double amount = 1;
+    string description = 2;
+    string reference = 3;
+}
+
+message Transfer {
+    double amount = 1;
+    string description = 2;
+    string reference = 3;
+    string payee = 4;
+}
+
+message Request {
+    string account_number = 1;
+}
+
+message Response {
+    bool created = 1;
+    Transaction transaction = 2;
+    repeated Transaction transactions = 3;
+}

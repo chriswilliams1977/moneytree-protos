@@ -5,8 +5,7 @@ package account
 
 import (
 	fmt "fmt"
-	deposit "github.com/chriswilliams1977/moneytree-protos/deposit"
-	withdrawal "github.com/chriswilliams1977/moneytree-protos/withdrawal"
+	transaction "github.com/chriswilliams1977/moneytree-protos/transaction"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
 )
@@ -28,14 +27,46 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type Account_AccountType int32
+
+const (
+	Account_UNKNOWN_ACCOUNT_TYPE Account_AccountType = 0
+	Account_CurrentAccount       Account_AccountType = 1
+	Account_SavingAccount        Account_AccountType = 2
+	Account_MortgageAccount      Account_AccountType = 3
+)
+
+var Account_AccountType_name = map[int32]string{
+	0: "UNKNOWN_ACCOUNT_TYPE",
+	1: "CurrentAccount",
+	2: "SavingAccount",
+	3: "MortgageAccount",
+}
+
+var Account_AccountType_value = map[string]int32{
+	"UNKNOWN_ACCOUNT_TYPE": 0,
+	"CurrentAccount":       1,
+	"SavingAccount":        2,
+	"MortgageAccount":      3,
+}
+
+func (x Account_AccountType) String() string {
+	return proto.EnumName(Account_AccountType_name, int32(x))
+}
+
+func (Account_AccountType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_8e28828dcb8d24f0, []int{0, 0}
+}
+
 type Account struct {
-	Number               string   `protobuf:"bytes,1,opt,name=number,proto3" json:"number,omitempty"`
-	Type                 string   `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	Status               string   `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
-	Balance              int32    `protobuf:"varint,4,opt,name=balance,proto3" json:"balance,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Number               string              `protobuf:"bytes,1,opt,name=number,proto3" json:"number,omitempty"`
+	Type                 Account_AccountType `protobuf:"varint,2,opt,name=type,proto3,enum=moneytree.svc.account.Account_AccountType" json:"type,omitempty"`
+	Status               string              `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	Balance              float64             `protobuf:"fixed64,4,opt,name=balance,proto3" json:"balance,omitempty"`
+	Uuid                 int64               `protobuf:"varint,5,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
 func (m *Account) Reset()         { *m = Account{} }
@@ -70,11 +101,11 @@ func (m *Account) GetNumber() string {
 	return ""
 }
 
-func (m *Account) GetType() string {
+func (m *Account) GetType() Account_AccountType {
 	if m != nil {
 		return m.Type
 	}
-	return ""
+	return Account_UNKNOWN_ACCOUNT_TYPE
 }
 
 func (m *Account) GetStatus() string {
@@ -84,25 +115,158 @@ func (m *Account) GetStatus() string {
 	return ""
 }
 
-func (m *Account) GetBalance() int32 {
+func (m *Account) GetBalance() float64 {
 	if m != nil {
 		return m.Balance
 	}
 	return 0
 }
 
-type Request struct {
-	AccountNumber        string   `protobuf:"bytes,1,opt,name=account_number,json=accountNumber,proto3" json:"account_number,omitempty"`
+func (m *Account) GetUuid() int64 {
+	if m != nil {
+		return m.Uuid
+	}
+	return 0
+}
+
+type CurrentAccount struct {
+	InterestRate         float64  `protobuf:"fixed64,1,opt,name=interest_rate,json=interestRate,proto3" json:"interest_rate,omitempty"`
+	MonthlyCharge        int32    `protobuf:"varint,2,opt,name=monthly_charge,json=monthlyCharge,proto3" json:"monthly_charge,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CurrentAccount) Reset()         { *m = CurrentAccount{} }
+func (m *CurrentAccount) String() string { return proto.CompactTextString(m) }
+func (*CurrentAccount) ProtoMessage()    {}
+func (*CurrentAccount) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e28828dcb8d24f0, []int{1}
+}
+
+func (m *CurrentAccount) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CurrentAccount.Unmarshal(m, b)
+}
+func (m *CurrentAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CurrentAccount.Marshal(b, m, deterministic)
+}
+func (m *CurrentAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CurrentAccount.Merge(m, src)
+}
+func (m *CurrentAccount) XXX_Size() int {
+	return xxx_messageInfo_CurrentAccount.Size(m)
+}
+func (m *CurrentAccount) XXX_DiscardUnknown() {
+	xxx_messageInfo_CurrentAccount.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CurrentAccount proto.InternalMessageInfo
+
+func (m *CurrentAccount) GetInterestRate() float64 {
+	if m != nil {
+		return m.InterestRate
+	}
+	return 0
+}
+
+func (m *CurrentAccount) GetMonthlyCharge() int32 {
+	if m != nil {
+		return m.MonthlyCharge
+	}
+	return 0
+}
+
+type SavingsAccount struct {
+	InterestRate         float64  `protobuf:"fixed64,1,opt,name=interest_rate,json=interestRate,proto3" json:"interest_rate,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SavingsAccount) Reset()         { *m = SavingsAccount{} }
+func (m *SavingsAccount) String() string { return proto.CompactTextString(m) }
+func (*SavingsAccount) ProtoMessage()    {}
+func (*SavingsAccount) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e28828dcb8d24f0, []int{2}
+}
+
+func (m *SavingsAccount) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SavingsAccount.Unmarshal(m, b)
+}
+func (m *SavingsAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SavingsAccount.Marshal(b, m, deterministic)
+}
+func (m *SavingsAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SavingsAccount.Merge(m, src)
+}
+func (m *SavingsAccount) XXX_Size() int {
+	return xxx_messageInfo_SavingsAccount.Size(m)
+}
+func (m *SavingsAccount) XXX_DiscardUnknown() {
+	xxx_messageInfo_SavingsAccount.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SavingsAccount proto.InternalMessageInfo
+
+func (m *SavingsAccount) GetInterestRate() float64 {
+	if m != nil {
+		return m.InterestRate
+	}
+	return 0
+}
+
+type MortgageAccount struct {
+	InterestRate         float64  `protobuf:"fixed64,1,opt,name=interest_rate,json=interestRate,proto3" json:"interest_rate,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MortgageAccount) Reset()         { *m = MortgageAccount{} }
+func (m *MortgageAccount) String() string { return proto.CompactTextString(m) }
+func (*MortgageAccount) ProtoMessage()    {}
+func (*MortgageAccount) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e28828dcb8d24f0, []int{3}
+}
+
+func (m *MortgageAccount) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_MortgageAccount.Unmarshal(m, b)
+}
+func (m *MortgageAccount) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_MortgageAccount.Marshal(b, m, deterministic)
+}
+func (m *MortgageAccount) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MortgageAccount.Merge(m, src)
+}
+func (m *MortgageAccount) XXX_Size() int {
+	return xxx_messageInfo_MortgageAccount.Size(m)
+}
+func (m *MortgageAccount) XXX_DiscardUnknown() {
+	xxx_messageInfo_MortgageAccount.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MortgageAccount proto.InternalMessageInfo
+
+func (m *MortgageAccount) GetInterestRate() float64 {
+	if m != nil {
+		return m.InterestRate
+	}
+	return 0
+}
+
+type Request struct {
+	AccountNumber        string                   `protobuf:"bytes,1,opt,name=account_number,json=accountNumber,proto3" json:"account_number,omitempty"`
+	Transaction          *transaction.Transaction `protobuf:"bytes,2,opt,name=transaction,proto3" json:"transaction,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
 }
 
 func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e28828dcb8d24f0, []int{1}
+	return fileDescriptor_8e28828dcb8d24f0, []int{4}
 }
 
 func (m *Request) XXX_Unmarshal(b []byte) error {
@@ -130,19 +294,27 @@ func (m *Request) GetAccountNumber() string {
 	return ""
 }
 
+func (m *Request) GetTransaction() *transaction.Transaction {
+	if m != nil {
+		return m.Transaction
+	}
+	return nil
+}
+
 type Response struct {
-	Account              *Account   `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
-	Accounts             []*Account `protobuf:"bytes,2,rep,name=accounts,proto3" json:"accounts,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Account              *Account                   `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
+	Accounts             []*Account                 `protobuf:"bytes,2,rep,name=accounts,proto3" json:"accounts,omitempty"`
+	Transactions         []*transaction.Transaction `protobuf:"bytes,3,rep,name=transactions,proto3" json:"transactions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
 }
 
 func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e28828dcb8d24f0, []int{2}
+	return fileDescriptor_8e28828dcb8d24f0, []int{5}
 }
 
 func (m *Response) XXX_Unmarshal(b []byte) error {
@@ -177,8 +349,19 @@ func (m *Response) GetAccounts() []*Account {
 	return nil
 }
 
+func (m *Response) GetTransactions() []*transaction.Transaction {
+	if m != nil {
+		return m.Transactions
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterEnum("moneytree.svc.account.Account_AccountType", Account_AccountType_name, Account_AccountType_value)
 	proto.RegisterType((*Account)(nil), "moneytree.svc.account.Account")
+	proto.RegisterType((*CurrentAccount)(nil), "moneytree.svc.account.CurrentAccount")
+	proto.RegisterType((*SavingsAccount)(nil), "moneytree.svc.account.SavingsAccount")
+	proto.RegisterType((*MortgageAccount)(nil), "moneytree.svc.account.MortgageAccount")
 	proto.RegisterType((*Request)(nil), "moneytree.svc.account.Request")
 	proto.RegisterType((*Response)(nil), "moneytree.svc.account.Response")
 }
@@ -186,31 +369,41 @@ func init() {
 func init() { proto.RegisterFile("account.proto", fileDescriptor_8e28828dcb8d24f0) }
 
 var fileDescriptor_8e28828dcb8d24f0 = []byte{
-	// 370 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x93, 0x4f, 0x4f, 0xf2, 0x40,
-	0x10, 0xc6, 0xdf, 0x02, 0x2f, 0xc5, 0x21, 0x10, 0xb3, 0xf1, 0x4f, 0xc3, 0x41, 0x49, 0xa3, 0x09,
-	0x17, 0x8b, 0x62, 0x0c, 0xea, 0x4d, 0x34, 0xf1, 0x66, 0x4c, 0x3d, 0x10, 0xbd, 0x98, 0x6d, 0x99,
-	0xc0, 0x26, 0x6d, 0xb7, 0xee, 0x6e, 0x21, 0xdc, 0xfc, 0x84, 0x7e, 0x26, 0x63, 0xbb, 0x05, 0x51,
-	0x89, 0x3d, 0x78, 0xdb, 0x99, 0x79, 0xe6, 0x37, 0x7d, 0x26, 0x53, 0x68, 0x50, 0xdf, 0xe7, 0x49,
-	0xa4, 0x9c, 0x58, 0x70, 0xc5, 0xc9, 0x76, 0xc8, 0x23, 0x9c, 0x2b, 0x81, 0xe8, 0xc8, 0xa9, 0xef,
-	0xe8, 0x62, 0xab, 0x31, 0xc2, 0x98, 0x4b, 0xa6, 0x55, 0xad, 0xcd, 0x19, 0x53, 0x93, 0x91, 0xa0,
-	0x33, 0x1a, 0x64, 0x19, 0x7b, 0x0c, 0xe6, 0x55, 0xa6, 0x25, 0x3b, 0x50, 0x8d, 0x92, 0xd0, 0x43,
-	0x61, 0x19, 0x6d, 0xa3, 0xb3, 0xe1, 0xea, 0x88, 0x10, 0xa8, 0xa8, 0x79, 0x8c, 0x56, 0x29, 0xcd,
-	0xa6, 0xef, 0x0f, 0xad, 0x54, 0x54, 0x25, 0xd2, 0x2a, 0x67, 0xda, 0x2c, 0x22, 0x16, 0x98, 0x1e,
-	0x0d, 0x68, 0xe4, 0xa3, 0x55, 0x69, 0x1b, 0x9d, 0xff, 0x6e, 0x1e, 0xda, 0xc7, 0x60, 0xba, 0xf8,
-	0x92, 0xa0, 0x54, 0xe4, 0x10, 0x9a, 0xfa, 0xfb, 0x9e, 0x57, 0x06, 0xe6, 0x96, 0xee, 0xd2, 0xa4,
-	0xfd, 0x6a, 0x40, 0xcd, 0x45, 0x19, 0xf3, 0x48, 0x22, 0x39, 0x07, 0x53, 0x57, 0x53, 0x71, 0xbd,
-	0xb7, 0xe7, 0xfc, 0xe8, 0xd8, 0xd1, 0x6e, 0xdc, 0x5c, 0x4e, 0x2e, 0xa1, 0xa6, 0x9f, 0xd2, 0x2a,
-	0xb5, 0xcb, 0x05, 0x5a, 0x17, 0xfa, 0xde, 0x5b, 0x19, 0x9a, 0x3a, 0xfb, 0x80, 0x62, 0xca, 0x7c,
-	0x24, 0x2e, 0x34, 0xae, 0x05, 0x52, 0x85, 0xf9, 0xda, 0x7e, 0xa1, 0xb5, 0xf6, 0xd7, 0xd4, 0x73,
-	0x6b, 0xf6, 0x3f, 0x72, 0x0f, 0xf5, 0x5b, 0x54, 0xba, 0x41, 0xae, 0x25, 0xea, 0xfd, 0x15, 0x21,
-	0x0e, 0x81, 0x2c, 0x89, 0x83, 0x79, 0xb6, 0xd1, 0xbf, 0x00, 0x3f, 0xc2, 0x56, 0x12, 0x8f, 0x96,
-	0xf6, 0x6f, 0xb2, 0xfb, 0xfa, 0x86, 0xce, 0xef, 0x4e, 0xd7, 0x8b, 0xa0, 0x3d, 0xd8, 0x5d, 0x41,
-	0x0f, 0x17, 0xb7, 0x4a, 0x0e, 0xbe, 0x74, 0x7f, 0x3a, 0xe3, 0xa5, 0xaa, 0xc0, 0x8c, 0x41, 0xff,
-	0xe9, 0x6c, 0xcc, 0xd4, 0x24, 0xf1, 0x1c, 0x9f, 0x87, 0x5d, 0x7f, 0x22, 0x98, 0x9c, 0xb1, 0x20,
-	0x60, 0x34, 0x94, 0x27, 0x17, 0xfd, 0x7e, 0x77, 0x01, 0x38, 0x4a, 0x7f, 0x0f, 0xd9, 0xd5, 0x0c,
-	0xaf, 0x9a, 0xc6, 0xa7, 0xef, 0x01, 0x00, 0x00, 0xff, 0xff, 0x41, 0x98, 0x57, 0xf1, 0x77, 0x03,
-	0x00, 0x00,
+	// 541 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x94, 0xff, 0x6e, 0x12, 0x41,
+	0x10, 0xc7, 0x7b, 0x5c, 0x5b, 0xea, 0xd0, 0xa3, 0xed, 0xfa, 0x23, 0x97, 0xfe, 0xa1, 0xe4, 0x8c,
+	0x86, 0x98, 0x78, 0x44, 0x4c, 0x45, 0xfd, 0xc3, 0x04, 0x88, 0xa9, 0xd1, 0x48, 0x9b, 0x2d, 0xa4,
+	0xd1, 0x98, 0x90, 0x65, 0x3b, 0x81, 0x4b, 0x60, 0x0f, 0x77, 0xf7, 0x30, 0xe7, 0x33, 0xf8, 0x42,
+	0xbe, 0x83, 0x0f, 0x65, 0xb8, 0xdb, 0xa3, 0x47, 0xb5, 0x4a, 0x13, 0xfe, 0x62, 0x67, 0x76, 0xe6,
+	0x33, 0xb3, 0xf3, 0x1d, 0x0e, 0x1c, 0xc6, 0x79, 0x18, 0x09, 0xed, 0x4f, 0x65, 0xa8, 0x43, 0x72,
+	0x77, 0x12, 0x0a, 0x8c, 0xb5, 0x44, 0xf4, 0xd5, 0x8c, 0xfb, 0xe6, 0xf2, 0xf0, 0x40, 0x4b, 0x26,
+	0x14, 0xe3, 0x3a, 0x08, 0x45, 0x1a, 0xe9, 0xfd, 0x28, 0x40, 0xb1, 0x99, 0x5e, 0x93, 0x7b, 0xb0,
+	0x2d, 0xa2, 0xc9, 0x00, 0xa5, 0x6b, 0x55, 0xac, 0xea, 0x2d, 0x6a, 0x2c, 0xf2, 0x06, 0x36, 0x75,
+	0x3c, 0x45, 0xb7, 0x50, 0xb1, 0xaa, 0xe5, 0xfa, 0x13, 0xff, 0xaf, 0x70, 0xbf, 0xb9, 0xfc, 0xdb,
+	0x8d, 0xa7, 0x48, 0x93, 0xbc, 0x39, 0x57, 0x69, 0xa6, 0x23, 0xe5, 0xda, 0x29, 0x37, 0xb5, 0x88,
+	0x0b, 0xc5, 0x01, 0x1b, 0x33, 0xc1, 0xd1, 0xdd, 0xac, 0x58, 0x55, 0x8b, 0x66, 0x26, 0x21, 0xb0,
+	0x19, 0x45, 0xc1, 0x85, 0xbb, 0x55, 0xb1, 0xaa, 0x36, 0x4d, 0xce, 0x1e, 0x87, 0x52, 0x0e, 0x4d,
+	0x5c, 0xb8, 0xd3, 0xeb, 0x7c, 0xe8, 0x9c, 0x9c, 0x77, 0xfa, 0xcd, 0x76, 0xfb, 0xa4, 0xd7, 0xe9,
+	0xf6, 0xbb, 0x9f, 0x4e, 0xdf, 0xee, 0x6f, 0x10, 0x02, 0xe5, 0x76, 0x24, 0x25, 0x0a, 0x6d, 0xe2,
+	0xf7, 0x2d, 0x72, 0x00, 0xce, 0x19, 0x9b, 0x05, 0x62, 0x98, 0xb9, 0x0a, 0xe4, 0x36, 0xec, 0x7d,
+	0x0c, 0xa5, 0x1e, 0xb2, 0x21, 0x66, 0x4e, 0xdb, 0xfb, 0x72, 0x35, 0x97, 0x3c, 0x04, 0x27, 0x10,
+	0x1a, 0x25, 0x2a, 0xdd, 0x97, 0x4c, 0x63, 0x32, 0x1b, 0x8b, 0xee, 0x66, 0x4e, 0xca, 0x34, 0x92,
+	0x47, 0x50, 0x9e, 0x84, 0x42, 0x8f, 0xc6, 0x71, 0x9f, 0x8f, 0x98, 0x1c, 0xa6, 0xb3, 0xda, 0xa2,
+	0x8e, 0xf1, 0xb6, 0x13, 0xa7, 0x77, 0x04, 0xe5, 0xb4, 0x0b, 0x75, 0x13, 0xba, 0xf7, 0xe2, 0x8f,
+	0x4e, 0x57, 0xcb, 0xfb, 0x0e, 0x45, 0x8a, 0x5f, 0x23, 0x54, 0x7a, 0xde, 0xa0, 0xd1, 0xa9, 0xbf,
+	0x24, 0x71, 0xb6, 0x37, 0x9d, 0x54, 0xe9, 0x77, 0x50, 0xca, 0xad, 0x48, 0xf2, 0x88, 0x52, 0xfd,
+	0xf1, 0x15, 0xc1, 0xf3, 0x4b, 0xd4, 0xbd, 0x3c, 0xd3, 0x7c, 0xaa, 0xf7, 0xcb, 0x82, 0x1d, 0x8a,
+	0x6a, 0x1a, 0x0a, 0x85, 0xe4, 0x25, 0x14, 0x4d, 0x9d, 0xa4, 0x6c, 0xa9, 0x7e, 0xff, 0xdf, 0x3b,
+	0x44, 0xb3, 0x70, 0xf2, 0x1a, 0x76, 0xcc, 0x51, 0xb9, 0x85, 0x8a, 0xbd, 0x42, 0xea, 0x22, 0x9e,
+	0xbc, 0x87, 0xdd, 0x5c, 0x47, 0xf3, 0xe5, 0xb3, 0x6f, 0xf0, 0x9a, 0xa5, 0xdc, 0xfa, 0x4f, 0x1b,
+	0xca, 0xa6, 0xc2, 0x19, 0xca, 0x59, 0xc0, 0x91, 0x50, 0x70, 0xda, 0x12, 0x99, 0x5e, 0x68, 0xf2,
+	0x9f, 0xce, 0x0e, 0x1f, 0x5c, 0x73, 0x9f, 0x8d, 0xc9, 0xdb, 0x20, 0xa7, 0x50, 0x3a, 0xc6, 0x6c,
+	0xf5, 0xd4, 0xb5, 0x44, 0xa3, 0xea, 0x2a, 0xc4, 0x73, 0x20, 0x97, 0xc4, 0x56, 0x6c, 0x74, 0x5e,
+	0x03, 0x98, 0x82, 0xd3, 0x9b, 0x5e, 0x30, 0x8d, 0x2d, 0xf3, 0x9f, 0x5d, 0x03, 0xb3, 0x0b, 0x7b,
+	0xc7, 0xa8, 0x73, 0x2a, 0xac, 0x63, 0x04, 0xad, 0xc6, 0xe7, 0xa3, 0x61, 0xa0, 0x47, 0xd1, 0xc0,
+	0xe7, 0xe1, 0xa4, 0xc6, 0x47, 0x32, 0x50, 0xdf, 0x82, 0xf1, 0x38, 0x60, 0x13, 0xf5, 0xec, 0x55,
+	0xa3, 0x51, 0x5b, 0x00, 0x9e, 0x26, 0x9f, 0x44, 0x55, 0x33, 0x8c, 0xc1, 0x76, 0x62, 0x3f, 0xff,
+	0x1d, 0x00, 0x00, 0xff, 0xff, 0xd8, 0xa8, 0x42, 0x38, 0x5d, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -224,8 +417,8 @@ type AccountServiceClient interface {
 	CreateAccount(ctx context.Context, in *Account, opts ...client.CallOption) (*Response, error)
 	GetAccounts(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	GetAccountByNumber(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	UpdateAccountDeposit(ctx context.Context, in *deposit.Deposit, opts ...client.CallOption) (*Response, error)
-	UpdateAccountWithdrawal(ctx context.Context, in *withdrawal.Withdrawal, opts ...client.CallOption) (*Response, error)
+	UpdateBalance(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	GetTransactions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
 type accountServiceClient struct {
@@ -276,8 +469,8 @@ func (c *accountServiceClient) GetAccountByNumber(ctx context.Context, in *Reque
 	return out, nil
 }
 
-func (c *accountServiceClient) UpdateAccountDeposit(ctx context.Context, in *deposit.Deposit, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.serviceName, "AccountService.updateAccountDeposit", in)
+func (c *accountServiceClient) UpdateBalance(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.serviceName, "AccountService.UpdateBalance", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -286,8 +479,8 @@ func (c *accountServiceClient) UpdateAccountDeposit(ctx context.Context, in *dep
 	return out, nil
 }
 
-func (c *accountServiceClient) UpdateAccountWithdrawal(ctx context.Context, in *withdrawal.Withdrawal, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.serviceName, "AccountService.updateAccountWithdrawal", in)
+func (c *accountServiceClient) GetTransactions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.serviceName, "AccountService.GetTransactions", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -302,8 +495,8 @@ type AccountServiceHandler interface {
 	CreateAccount(context.Context, *Account, *Response) error
 	GetAccounts(context.Context, *Request, *Response) error
 	GetAccountByNumber(context.Context, *Request, *Response) error
-	UpdateAccountDeposit(context.Context, *deposit.Deposit, *Response) error
-	UpdateAccountWithdrawal(context.Context, *withdrawal.Withdrawal, *Response) error
+	UpdateBalance(context.Context, *Request, *Response) error
+	GetTransactions(context.Context, *Request, *Response) error
 }
 
 func RegisterAccountServiceHandler(s server.Server, hdlr AccountServiceHandler, opts ...server.HandlerOption) {
@@ -326,10 +519,10 @@ func (h *AccountService) GetAccountByNumber(ctx context.Context, in *Request, ou
 	return h.AccountServiceHandler.GetAccountByNumber(ctx, in, out)
 }
 
-func (h *AccountService) UpdateAccountDeposit(ctx context.Context, in *deposit.Deposit, out *Response) error {
-	return h.AccountServiceHandler.UpdateAccountDeposit(ctx, in, out)
+func (h *AccountService) UpdateBalance(ctx context.Context, in *Request, out *Response) error {
+	return h.AccountServiceHandler.UpdateBalance(ctx, in, out)
 }
 
-func (h *AccountService) UpdateAccountWithdrawal(ctx context.Context, in *withdrawal.Withdrawal, out *Response) error {
-	return h.AccountServiceHandler.UpdateAccountWithdrawal(ctx, in, out)
+func (h *AccountService) GetTransactions(ctx context.Context, in *Request, out *Response) error {
+	return h.AccountServiceHandler.GetTransactions(ctx, in, out)
 }

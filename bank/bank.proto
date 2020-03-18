@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package moneytree.svc.bank;
+option go_package = "github.com/chriswilliams1977/moneytree-protos/bank";
+
+import "address.proto";
+
+service BankService {
+    rpc GetCustomerBank(Request) returns (Response) {}
+}
+
+message Bank {
+    string id = 1;
+    string name = 2;
+    int32 routing_number = 3;
+    address.Address address = 4;
+    repeated string phone_numbers = 5;
+    string email_address = 6;
+    string uuid = 7 ;
+}
+
+// Created a blank get request
+message Request {
+    string account_number = 1;
+}
+
+message Response {
+    bool created = 1;
+    Bank bank = 2;
+    repeated Bank banks = 3;
+}
