@@ -42,7 +42,6 @@ message MortgageAccount {
 
 message Request {
   string account_number = 1;
-  transaction.Transaction transaction = 2;
 }
 
 message Response {
