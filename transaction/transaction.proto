@@ -24,7 +24,7 @@ message Transaction {
     string description = 5;
     string reference = 6;
     google.protobuf.Timestamp date = 7;
-    string uuid =8;
+    string uuid = 8;
 }
 
 message Request {

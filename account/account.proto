@@ -24,7 +24,7 @@ message Account {
   AccountType type = 2;
   string status = 3;
   double balance = 4;
-  int64 uuid = 5;
+  string uuid = 5;
 }
 
 message CurrentAccount {
