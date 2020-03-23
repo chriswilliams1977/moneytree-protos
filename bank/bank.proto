@@ -21,7 +21,7 @@ message Bank {
 
 // Created a blank get request
 message Request {
-    string account_number = 1;
+    int32 id = 1;
 }
 
 message Response {
