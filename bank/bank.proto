@@ -10,7 +10,7 @@ service BankService {
 }
 
 message Bank {
-    string id = 1;
+    int32 id = 1;
     string name = 2;
     int32 routing_number = 3;
     address.Address address = 4;

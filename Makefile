@@ -9,7 +9,7 @@
 #version is appended to go mod when downloaded
 build:
 	protoc \
-		--proto_path=./customer --go_out=plugins=micro,paths=source_relative:./customer -I./customer -I./account -I./address -I./transaction \
+		--proto_path=./customer --go_out=plugins=micro,paths=source_relative:./customer -I./customer -I./account -I./address -I./transaction -I./bank \
 		customer/customer.proto
 
 	protoc \
