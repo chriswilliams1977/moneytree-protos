@@ -9,7 +9,7 @@ service AccountService {
     rpc CreateAccount(Account) returns (Response) {}
     rpc GetAccounts(Request) returns (Response) {}
     rpc GetAccountByNumber(Request) returns (Response) {}
-    rpc UpdateBalance(Request) returns (Response) {}
+    rpc UpdateAccount(Account) returns (Response) {}
     rpc GetTransactions(Request) returns(Response) {}
 }
 
