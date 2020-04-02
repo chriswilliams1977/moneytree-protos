@@ -8,6 +8,7 @@ import "address.proto";
 service BankService {
     rpc CreateBank(Bank) returns (Response) {}
     rpc GetBank(Request) returns (Response) {}
+    rpc GetBankByID(Request) returns (Response) {}
 }
 
 message Bank {
